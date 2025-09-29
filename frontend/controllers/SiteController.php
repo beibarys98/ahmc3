@@ -199,6 +199,8 @@ class SiteController extends Controller
             ->count();
 
         if ($uploadedCount == count($requiredFileTypeIds)) {
+            $userCycle->status = 'enrolled';
+            $userCycle->save(false);
             return $this->redirect(['cycle', 'id' => $userCycle->cycle_id]);
         } else {
             Yii::$app->session->setFlash('danger', 'Барлық файлдар жүктелмеген.');
