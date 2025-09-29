@@ -12,6 +12,7 @@ $this->title = Yii::$app->name;
 
     <br>
 
+    <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary' => false,
@@ -40,4 +41,5 @@ $this->title = Yii::$app->name;
 
         ],
     ]); ?>
+    </div>
 </div>
