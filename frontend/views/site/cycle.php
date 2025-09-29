@@ -2,13 +2,9 @@
 
 /** @var yii\web\View $this */
 
-use common\models\Test;
-use common\models\User;
 use common\models\UserTest;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 $this->title = Yii::$app->name;
 ?>
@@ -17,25 +13,27 @@ $this->title = Yii::$app->name;
     <div class="card p-3 shadow">
         <h1>Қатысушы</h1>
 
-        <?= GridView::widget([
-            'dataProvider' => $user,
-            'summary' => false,
-            'showHeader' => false,
-            'columns' => [
-                'username',
-                'name',
-                'organization',
-                [
-                    'format' => 'raw',
-                    'contentOptions' => ['class' => 'text-end'],
-                    'content' => function ($model) {
-                        return Html::a('Өзгерту', ['user/update', 'id' => $model->id], [
-                            'class' => 'btn btn-outline-secondary'
-                        ]);
-                    },
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $user,
+                'summary' => false,
+                'showHeader' => false,
+                'columns' => [
+                    'username',
+                    'name',
+                    'organization',
+                    [
+                        'format' => 'raw',
+                        'contentOptions' => ['class' => 'text-end'],
+                        'content' => function ($model) {
+                            return Html::a('Өзгерту', ['user/update', 'id' => $model->id], [
+                                'class' => 'btn btn-outline-secondary'
+                            ]);
+                        },
+                    ],
                 ],
-            ],
-        ]); ?>
+            ]); ?>
+        </div>
     </div>
 
     <br>
@@ -43,6 +41,7 @@ $this->title = Yii::$app->name;
     <div class="card p-3 shadow">
         <h1>Тесттер</h1>
 
+        <div class="table-responsive">
         <?= GridView::widget([
             'dataProvider' => $test,
             'summary' => false,
@@ -79,6 +78,7 @@ $this->title = Yii::$app->name;
 
             ],
         ]); ?>
+        </div>
     </div>
 
     <br>
