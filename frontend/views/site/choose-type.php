@@ -25,8 +25,7 @@ $this->title = 'Оқу түрін таңдаңыз';
                 'attribute' => 'file',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model['file'] ? Html::a('Келісім шарт', Yii::getAlias('@web/') . $model['file'], [
-                        'target' => '_blank',
+                    return $model['file'] ? Html::a('Келісім шарт', '#', [
                         'class' => 'btn btn-link p-0'
                     ]) : '';
                 },

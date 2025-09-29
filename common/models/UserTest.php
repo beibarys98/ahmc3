@@ -53,9 +53,9 @@ class UserTest extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'test_id' => 'Test ID',
-            'start_time' => 'Start Time',
-            'end_time' => 'End Time',
-            'result' => 'Result',
+            'start_time' => 'Бастады',
+            'end_time' => 'Аяқтады',
+            'result' => 'Нәтиже',
         ];
     }
 

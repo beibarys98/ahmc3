@@ -29,7 +29,10 @@ class FileType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            ['singleFile', 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf'],
+            ['singleFile', 'file',
+                'skipOnEmpty' => true,
+                'extensions' => 'jpg, jpeg, png, heic, heif, webp, pdf'
+            ],
 
             [['file', 'type'], 'required'],
             [['file'], 'string', 'max' => 255],

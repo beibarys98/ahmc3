@@ -152,10 +152,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'name',
                     'value' => 'user.name',
+                    'label' => 'Аты-жөні',
                 ],
                 [
                     'attribute' => 'organization',
                     'value' => 'user.organization',
+                    'label' => 'Мекеме',
                 ],
                 'start_time',
                 'end_time',

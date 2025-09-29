@@ -52,11 +52,12 @@ class Test extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'cycle_id' => 'Cycle ID',
-            'title_kz' => 'Title Kz',
-            'title_ru' => 'Title Ru',
-            'status' => 'Status',
-            'duration' => 'Duration',
+            'cycle_id' => 'Цикл',
+            'title_kz' => 'Атауы',
+            'title_ru' => 'Название',
+            'status' => 'Статус',
+            'duration' => 'Ұзақтығы',
+            'file' => 'Файл'
         ];
     }
 

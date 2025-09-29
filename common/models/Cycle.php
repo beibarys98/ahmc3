@@ -49,11 +49,11 @@ class Cycle extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'course_id' => 'Course ID',
-            'title_kz' => 'Title Kz',
-            'title_ru' => 'Title Ru',
-            'month' => 'Month',
-            'duration' => 'Duration',
+            'course_id' => 'Мамандық',
+            'title_kz' => 'Атауы',
+            'title_ru' => 'Название',
+            'month' => 'Айы',
+            'duration' => 'Ұзақтығы',
         ];
     }
 
