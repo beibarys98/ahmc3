@@ -54,7 +54,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Мамандықтар', 'url' => ['/course/index']];
         $menuItems[] = ['label' => 'Циклдер', 'url' => ['/cycle/index']];
         $menuItems[] = ['label' => 'Тесттер', 'url' => ['/test/index']];
-        $menuItems[] = ['label' => 'Анкеталар', 'url' => ['/user-survey/index']];
+        $menuItems[] = ['label' => 'Анкеталар', 'url' => ['/survey/index']];
     }
 
     echo Nav::widget([

@@ -36,11 +36,11 @@ class Test extends \yii\db\ActiveRecord
         return [
             ['file', 'file', 'skipOnEmpty' => false, 'extensions' => 'doc, docx'],
 
-            [['cycle_id', 'title_kz', 'title_ru', 'status', 'duration'], 'required'],
+            [['cycle_id', 'title_kz', 'title_ru', 'status', 'duration', 'type'], 'required'],
             [['cycle_id'], 'integer'],
             [['duration'], 'safe'],
             [['title_kz', 'title_ru'], 'string', 'max' => 255],
-            [['status'], 'string', 'max' => 50],
+            [['status', 'type'], 'string', 'max' => 50],
             [['cycle_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cycle::class, 'targetAttribute' => ['cycle_id' => 'id']],
         ];
     }

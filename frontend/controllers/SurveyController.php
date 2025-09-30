@@ -20,7 +20,7 @@ use yii\web\UploadedFile;
 /**
  * TestController implements the CRUD actions for Test model.
  */
-class TestController extends Controller
+class SurveyController extends Controller
 {
     /**
      * @inheritDoc
@@ -50,7 +50,7 @@ class TestController extends Controller
         $searchModel = new TestSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $dataProvider->query->andWhere(['type' => 'test']);
+        $dataProvider->query->andWhere(['type' => 'survey']);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

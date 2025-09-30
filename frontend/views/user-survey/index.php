@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\search\UserSurveySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'User Surveys';
+$this->title = '';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-survey-index">
