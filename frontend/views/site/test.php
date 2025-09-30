@@ -87,7 +87,7 @@ $this->registerJs("
                 <form class="mt-5" id="answerForm" action="<?= Url::to(['submit']) ?>" method="get">
                     <?php
                     $participantAnswer = UserAnswer::find()
-                        ->andWhere(['user_id' => $participant->id, 'question_id' => $question->id])
+                        ->andWhere(['user_id' => $participant->user_id, 'question_id' => $question->id])
                         ->one();
                     $selectedAnswerId = $participantAnswer ? $participantAnswer->answer_id : null; ?>
 
