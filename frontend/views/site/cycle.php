@@ -60,7 +60,7 @@ $this->title = Yii::$app->name;
 
                         // Conditions to disable:
                         $alreadySubmitted = $participant && $participant->end_time;
-                        $notPublished = $model->status !== 'published'; // adjust value if your statuses differ
+                        $notPublished = $model->status !== 'public'; // adjust value if your statuses differ
 
                         if ($alreadySubmitted || $notPublished) {
                             return Html::tag('span', 'Тапсырылды', [
