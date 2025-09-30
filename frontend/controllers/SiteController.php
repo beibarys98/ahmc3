@@ -303,7 +303,7 @@ class SiteController extends Controller
     {
         $test_id = Question::findOne($qid)->test_id;
         $test = Test::findOne($test_id);
-        $participant = UserTest::findOne(['user_id' => Yii::$app->user->id]);
+        $participant = UserTest::findOne(['user_id' => Yii::$app->user->id, 'test_id' => $test_id]);
 
         //unanswered questions? return to test
         $now = new DateTime();
