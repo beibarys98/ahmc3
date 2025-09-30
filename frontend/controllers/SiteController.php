@@ -215,12 +215,23 @@ class SiteController extends Controller
         ]);
 
         $test = new ActiveDataProvider([
-            'query' => Test::find()->andWhere(['cycle_id' => $id])->andWhere(['status' => ['public', 'finished', 'certificated']]),
+            'query' => Test::find()
+                ->andWhere(['cycle_id' => $id])
+                ->andWhere(['status' => ['public', 'finished']])
+                ->andWhere(['type' => 'test']),
+        ]);
+
+        $survey = new ActiveDataProvider([
+            'query' => Test::find()
+                ->andWhere(['cycle_id' => $id])
+                ->andWhere(['status' => ['public', 'finished']])
+                ->andWhere(['type' => 'survey']),
         ]);
 
         return $this->render('cycle', [
             'user' => $user,
             'test' => $test,
+            'survey' => $survey,
         ]);
     }
 
@@ -243,11 +254,20 @@ class SiteController extends Controller
             $participant->save(false);
         }
 
-        return $this->render('test', [
-            'test' => $test,
-            'question' => $question,
-            'participant' => $participant,
-        ]);
+        if($test->type == 'test'){
+            return $this->render('test', [
+                'test' => $test,
+                'question' => $question,
+                'participant' => $participant,
+            ]);
+        }else{
+            return $this->render('survey', [
+                'test' => $test,
+                'question' => $question,
+                'participant' => $participant,
+            ]);
+        }
+
     }
 
     public function actionSubmit()

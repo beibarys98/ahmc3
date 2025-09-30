@@ -85,6 +85,45 @@ $this->title = Yii::$app->name;
 
     <div class="card p-3 shadow">
         <h1>Анкета</h1>
+
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $survey,
+                'summary' => false,
+                'showHeader' => false,
+                'columns' => [
+                    'title_kz',
+                    'status',
+                    'duration',
+                    [
+                        'header' => '',
+                        'format' => 'raw',
+                        'contentOptions' => ['class' => 'text-end'],
+                        'content' => function ($model) {
+                            $user_id = Yii::$app->user->id;
+                            $participant = UserTest::findOne(['user_id' => $user_id, 'test_id' => $model->id]);
+
+                            // Conditions to disable:
+                            $alreadySubmitted = $participant && $participant->end_time;
+                            $notPublished = $model->status !== 'public'; // adjust value if your statuses differ
+
+                            if ($alreadySubmitted || $notPublished) {
+                                return Html::tag('span', 'Тапсырылды', [
+                                    'class' => 'btn btn-outline-secondary disabled'
+                                ]);
+                            }
+
+                            return Html::a('Бастау', ['survey', 'id' => $model->id], [
+                                'class' => 'btn btn-outline-secondary',
+                                'data' => [
+                                    'confirm' => 'Сенімдісіз бе?',
+                                ],
+                            ]);
+                        },
+                    ]
+                ],
+            ]); ?>
+        </div>
     </div>
 
     <br>

@@ -220,7 +220,7 @@ class SurveyController extends Controller
             }
             // Check if the line is a question number
             elseif (preg_match('/^\s*\d+\s*[.)]\s*(.*)/', $line, $match)) {
-                if ($currentQuestionText !== '' && !empty($answers)) {
+                if ($currentQuestionText !== '') {
                     $this->saveQuestion($currentQuestionText, $answers, $test_id);
                 }
                 // Start a new question
@@ -234,7 +234,7 @@ class SurveyController extends Controller
         }
 
         // Save the last question
-        if ($currentQuestionText !== '' && !empty($answers)) {
+        if ($currentQuestionText !== '') {
             $this->saveQuestion($currentQuestionText, $answers, $test_id);
         }
     }
@@ -244,25 +244,27 @@ class SurveyController extends Controller
         $question = new Question();
         $question->test_id = $test_id;
         $question->question = trim($questionText);
+
         $question->save(false);
 
-        $firstAnswerId = null; // Store the first answer's ID
+        if (!empty($answers)) {
+            $firstAnswerId = null;
 
-        foreach ($answers as $index => $ansText) {
-            $answer = new Answer();
-            $answer->question_id = $question->id;
-            $answer->answer = trim($ansText);
-            $answer->save(false);
+            foreach ($answers as $index => $ansText) {
+                $answer = new Answer();
+                $answer->question_id = $question->id;
+                $answer->answer = trim($ansText);
+                $answer->save(false);
 
-            if ($index === 0) {
-                $firstAnswerId = $answer->id; // Save first answer's ID
+                if ($index === 0) {
+                    $firstAnswerId = $answer->id;
+                }
             }
-        }
 
-        // Update question->answer with the first answer's ID
-        if ($firstAnswerId !== null) {
-            $question->answer = $firstAnswerId;
-            $question->save(false, ['answer']); // Save only 'answer' field
+            if ($firstAnswerId !== null) {
+                $question->answer = $firstAnswerId;
+                $question->save(false, ['answer']);
+            }
         }
     }
 
