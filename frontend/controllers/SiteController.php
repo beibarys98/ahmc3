@@ -79,7 +79,7 @@ class SiteController extends Controller
             return $this->redirect('/user-cycle/index');
         }
 
-        $user_cycle = UserCycle::findOne(['user_id' => Yii::$app->user->identity->id]);
+        $user_cycle = UserCycle::findOne(['user_id' => Yii::$app->user->id]);
 
         if($user_cycle->status == 'enrolled') {
             return $this->redirect(['cycle', 'id' => $user_cycle->cycle_id]);
