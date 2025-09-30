@@ -122,7 +122,7 @@ $this->registerJs("
                     <?php foreach ($questions as $q): ?>
                         <?php
                         $participantAnswer = UserAnswer::find()
-                            ->andWhere(['user_id' => $participant->id, 'question_id' => $q->id])->one();
+                            ->andWhere(['user_id' => $participant->user_id, 'question_id' => $q->id])->one();
                         $backgroundColor = $participantAnswer && $participantAnswer->answer_id ? '#157347' : '#BB2D3B';
                         $borderStyle = ($q->id == $question->id) ? '5px solid #0B5ED7' : 'none'; ?>
 
