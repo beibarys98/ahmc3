@@ -68,7 +68,7 @@ $this->title = Yii::$app->name;
                             ]);
                         }
 
-                        return Html::a('Бастау', ['test', 'id' => $model->id], [
+                        return Html::a('Бастау', ['start', 'id' => $model->id], [
                             'class' => 'btn btn-outline-secondary',
                             'data' => [
                                 'confirm' => 'Сенімдісіз бе?',
@@ -113,7 +113,7 @@ $this->title = Yii::$app->name;
                                 ]);
                             }
 
-                            return Html::a('Бастау', ['survey', 'id' => $model->id], [
+                            return Html::a('Бастау', ['start', 'id' => $model->id], [
                                 'class' => 'btn btn-outline-secondary',
                                 'data' => [
                                     'confirm' => 'Сенімдісіз бе?',

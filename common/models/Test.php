@@ -13,6 +13,7 @@ use Yii;
  * @property string $title_ru
  * @property string $status
  * @property string $duration
+ * @property string $type
  *
  * @property Cycle $cycle
  */
