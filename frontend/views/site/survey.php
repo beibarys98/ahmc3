@@ -63,7 +63,7 @@ $this->registerJs("
 <div class="test-view">
 
     <?= Alert::widget() ?>
-hello
+
     <div class="row">
         <div class="col-12 col-md-8">
             <div style="font-size: 24px;
