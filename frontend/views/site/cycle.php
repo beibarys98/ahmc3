@@ -57,9 +57,12 @@ $this->title = Yii::$app->name;
                     'content' => function ($model) {
                         $user_id = Yii::$app->user->id;
                         $participant = UserTest::findOne(['user_id' => $user_id, 'test_id' => $model->id]);
-                        $isDisabled = $participant && $participant->end_time;
 
-                        if ($isDisabled) {
+                        // Conditions to disable:
+                        $alreadySubmitted = $participant && $participant->end_time;
+                        $notPublished = $model->status !== 'published'; // adjust value if your statuses differ
+
+                        if ($alreadySubmitted || $notPublished) {
                             return Html::tag('span', 'Тапсырылды', [
                                 'class' => 'btn btn-outline-secondary disabled'
                             ]);
@@ -73,9 +76,6 @@ $this->title = Yii::$app->name;
                         ]);
                     },
                 ]
-
-
-
             ],
         ]); ?>
         </div>
