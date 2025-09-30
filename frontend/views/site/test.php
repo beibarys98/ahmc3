@@ -65,7 +65,7 @@ $this->registerJs("
     <?= Alert::widget() ?>
 
     <div class="d-flex">
-        <div style="width: 70%;">
+        <div class="col-12 col-md-8">
             <div style="font-size: 24px;
     user-select: none; -webkit-user-select: none; -moz-user-select: none;
     -ms-user-select: none;">
@@ -115,7 +115,7 @@ $this->registerJs("
         $questions = Question::find()->andWhere(['test_id' => $test->id])->all();
         ?>
 
-        <div style="width: 30%;">
+        <div class="col-12 col-md-4 mt-4 mt-md-0">
             <div class="card shadow-sm p-3">
                 <div style="display: flex; flex-wrap: wrap; justify-content: center;">
                     <?php $index = 1; ?>
