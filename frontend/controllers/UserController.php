@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\User;
 use common\models\search\UserSearch;
+use common\models\UserCycle;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -93,8 +94,9 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['site/cycle']);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save(false)) {
+            $cycle_id = UserCycle::findOne(['user_id' => $id])->cycle_id;
+            return $this->redirect(['site/cycle', 'id' => $cycle_id]);
         }
 
         return $this->render('update', [

@@ -254,7 +254,7 @@ class SiteController extends Controller
     {
         $answerId = Yii::$app->request->get('answer_id');
         $questionId = Yii::$app->request->get('question_id');
-        $participantId = UserTest::findOne(['user_id' => Yii::$app->user->id])->id;
+        $participantId = Yii::$app->user->id;
         $participantAnswer = UserAnswer::findOne([
             'user_id' => $participantId,
             'question_id' => $questionId,
