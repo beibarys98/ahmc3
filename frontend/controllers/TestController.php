@@ -156,6 +156,7 @@ class TestController extends Controller
 
                     $model->file->saveAs($filePath);
                     $model->status = 'new';
+                    $model->type = 'test';
                     $model->save(false);
 
                     $this->parse($filePath, $model->id);

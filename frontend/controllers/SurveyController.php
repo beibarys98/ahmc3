@@ -77,7 +77,7 @@ class SurveyController extends Controller
         $model = $this->findModel($id);
         $model->status = 'new';
         $model->save(false);
-        return $this->redirect(['test/view',
+        return $this->redirect(['survey/view',
             'id' => $id,
             'mode' => 'test'
         ]);
@@ -87,7 +87,7 @@ class SurveyController extends Controller
         $model = $this->findModel($id);
         $model->status = 'ready';
         $model->save(false);
-        return $this->redirect(['test/view',
+        return $this->redirect(['survey/view',
             'id' => $id
         ]);
     }
@@ -96,7 +96,7 @@ class SurveyController extends Controller
         $model = $this->findModel($id);
         $model->status = 'public';
         $model->save(false);
-        return $this->redirect(['test/view',
+        return $this->redirect(['survey/view',
             'id' => $id
         ]);
     }
@@ -105,7 +105,7 @@ class SurveyController extends Controller
         $model = $this->findModel($id);
         $model->status = 'finished';
         $model->save(false);
-        return $this->redirect(['test/view',
+        return $this->redirect(['survey/view',
             'id' => $id
         ]);
     }
@@ -156,6 +156,7 @@ class SurveyController extends Controller
 
                     $model->file->saveAs($filePath);
                     $model->status = 'new';
+                    $model->type = 'survey';
                     $model->save(false);
 
                     $this->parse($filePath, $model->id);
