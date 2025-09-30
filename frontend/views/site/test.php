@@ -64,7 +64,7 @@ $this->registerJs("
 
     <?= Alert::widget() ?>
 
-    <div class="d-flex">
+    <div class="row">
         <div class="col-12 col-md-8">
             <div style="font-size: 24px;
     user-select: none; -webkit-user-select: none; -moz-user-select: none;
