@@ -18,7 +18,7 @@ class FileSearch extends File
     {
         return [
             [['id', 'user_id', 'cycle_id'], 'integer'],
-            [['type', 'path'], 'safe'],
+            [['path'], 'safe'],
         ];
     }
 
@@ -64,8 +64,7 @@ class FileSearch extends File
             'cycle_id' => $this->cycle_id,
         ]);
 
-        $query->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'path', $this->path]);
+        $query->andFilterWhere(['like', 'path', $this->path]);
 
         return $dataProvider;
     }
