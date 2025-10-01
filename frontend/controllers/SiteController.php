@@ -358,12 +358,29 @@ class SiteController extends Controller
             $totalQuestions = Question::find()
                 ->andWhere(['test_id' => $test->id])
                 ->count();
-            $answeredQuestions = UserAnswer::find()
-                ->joinWith('question')
-                ->andWhere(['user_answer.user_id' => $participant->user_id])
-                ->andWhere(['question.test_id' => $test->id])
-                ->andWhere(['IS NOT', 'user_answer.answer_id', null])
-                ->count();
+
+            if ($test->type == 'test') {
+                $answeredQuestions = UserAnswer::find()
+                    ->joinWith('question')
+                    ->andWhere(['user_answer.user_id' => $participant->user_id])
+                    ->andWhere(['question.test_id' => $test->id])
+                    ->andWhere(['IS NOT', 'user_answer.answer_id', null])
+                    ->count();
+            } elseif ($test->type == 'survey') {
+                $answeredQuestions = UserSurvey::find()
+                    ->joinWith('question')
+                    ->andWhere(['user_survey.user_id' => $participant->user_id])
+                    ->andWhere(['question.test_id' => $test->id])
+                    ->andWhere([
+                        'or',
+                        ['IS NOT', 'user_survey.answer_id', null],
+                        ['IS NOT', 'user_survey.answer_text', null]
+                    ])
+                    ->count();
+            } else {
+                $answeredQuestions = 0;
+            }
+
             if ($answeredQuestions != $totalQuestions) {
                 Yii::$app->session->setFlash('warning', Yii::t('app', 'Барлық сұрақтарға жауап беріңіз!'));
                 return $this->redirect(['test', 'id' => $test_id, 'qid' => $qid]);
