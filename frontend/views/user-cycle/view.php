@@ -59,9 +59,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $fileDataProvider,
+        'showHeader' => false,
         'columns' => [
-            'path',
+            [
+                'attribute' => 'path',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a(
+                        basename($model->path),   // текст ссылки (например имя файла)
+                        Yii::getAlias('@web/' . $model->path), // ссылка
+                        ['target' => '_blank']   // открывать в новой вкладке
+                    );
+                },
+            ],
         ],
     ]); ?>
+
 
 </div>
