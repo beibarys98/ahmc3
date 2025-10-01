@@ -235,7 +235,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionStart($id, $qid = null){
+    public function actionTest($id, $qid = null){
 
         $test = Test::findOne($id);
         if($qid){
