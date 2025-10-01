@@ -88,46 +88,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 $answers = Answer::find()->andWhere(['question_id' => $question->id])->all();
                 $alphabet = range('A', 'Z');
                 foreach ($answers as $index2 => $answer) {
-                    if($question->answer == $answer->id){
-                        echo '<span style="margin: 15px;"></span>'
-                            . Html::a('_/',
-                                ['answer/update', 'id' => $answer->id],
-                                ['class' => 'btn btn-sm btn-outline-primary']) . ' ';
-                        echo Html::a('Х',
-                                ['answer/delete', 'id' => $answer->id],
-                                [
-                                    'class' => 'btn btn-sm btn-outline-danger',
-                                    'data' => [
-                                        'confirm' => Yii::t('app', 'Сенімдісіз бе?'),
-                                        'method' => 'post',
-                                    ],
-                                ]) . ' ';
-                        echo '<strong>' . $alphabet[$index2] . '. ' .'</strong>';
-                        if($answer->img_path){
-                            echo Html::img(Yii::getAlias('@web/') . $answer->img_path, ['style' => 'max-width: 80%; padding: 10px;']) . '<br>';
-                        }else{
-                            echo '<strong>' . $answer->answer . '<br>' .'</strong>';
-                        }
+                    echo '<span style="margin: 15px;"></span>'
+                        . Html::a('_/',
+                            ['answer/update', 'id' => $answer->id],
+                            ['class' => 'btn btn-sm btn-outline-primary']) . ' ';
+                    echo Html::a('Х',
+                            ['answer/delete', 'id' => $answer->id],
+                            [
+                                'class' => 'btn btn-sm btn-outline-danger',
+                                'data' => [
+                                    'confirm' => Yii::t('app', 'Сенімдісіз бе?'),
+                                    'method' => 'post',
+                                ],
+                            ]) . ' ';
+                    echo $alphabet[$index2] . '. ';
+                    if($answer->img_path){
+                        echo Html::img(Yii::getAlias('@web/') . $answer->img_path, ['style' => 'max-width: 80%; padding: 10px;']) . '<br>';
                     }else{
-                        echo '<span style="margin: 15px;"></span>'
-                            . Html::a('_/',
-                                ['answer/update', 'id' => $answer->id],
-                                ['class' => 'btn btn-sm btn-outline-primary']) . ' ';
-                        echo Html::a('Х',
-                                ['answer/delete', 'id' => $answer->id],
-                                [
-                                    'class' => 'btn btn-sm btn-outline-danger',
-                                    'data' => [
-                                        'confirm' => Yii::t('app', 'Сенімдісіз бе?'),
-                                        'method' => 'post',
-                                    ],
-                                ]) . ' ';
-                        echo $alphabet[$index2] . '. ';
-                        if($answer->img_path){
-                            echo Html::img(Yii::getAlias('@web/') . $answer->img_path, ['style' => 'max-width: 80%; padding: 10px;']) . '<br>';
-                        }else{
-                            echo $answer->answer . '<br>';
-                        }
+                        echo $answer->answer . '<br>';
                     }
                 }
                 echo '<span style="margin: 15px;"></span>'
