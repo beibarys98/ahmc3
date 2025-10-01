@@ -2,9 +2,11 @@
 
 namespace frontend\controllers;
 
+use common\models\File;
 use common\models\UserCycle;
 use common\models\search\UserCycleSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -56,10 +58,25 @@ class UserCycleController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $fileQuery = File::find()->where(['user_id' => $model->user->id]);
+        $fileDataProvider = new ActiveDataProvider([
+            'query' => $fileQuery,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
+            ],
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'fileDataProvider' => $fileDataProvider,
         ]);
     }
+
 
     /**
      * Creates a new UserCycle model.
