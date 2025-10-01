@@ -60,12 +60,18 @@ class UserCycleController extends Controller
     {
         $model = $this->findModel($id);
 
-        $fileQuery = File::find()->where(['user_id' => $model->user->id]);
+        // подзапрос: для каждого file_type_id берём максимальный id
+        $subQuery = File::find()
+            ->select(['MAX(id)'])
+            ->andWhere(['user_id' => $model->user->id])
+            ->groupBy('file_type_id');
+
+        $fileQuery = File::find()
+            ->andWhere(['id' => $subQuery]); // только последние по типу
+
         $fileDataProvider = new ActiveDataProvider([
             'query' => $fileQuery,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
+            'pagination' => false, // можно отключить, если точно один на тип
             'sort' => [
                 'defaultOrder' => ['id' => SORT_DESC],
             ],
@@ -76,6 +82,7 @@ class UserCycleController extends Controller
             'fileDataProvider' => $fileDataProvider,
         ]);
     }
+
 
 
     /**
