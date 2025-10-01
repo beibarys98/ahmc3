@@ -17,7 +17,7 @@ class FileSearch extends File
     public function rules()
     {
         return [
-            [['id', 'user_id', 'cycle_id', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'user_id', 'cycle_id'], 'integer'],
             [['type', 'path'], 'safe'],
         ];
     }
@@ -62,8 +62,6 @@ class FileSearch extends File
             'id' => $this->id,
             'user_id' => $this->user_id,
             'cycle_id' => $this->cycle_id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])
