@@ -169,7 +169,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ActionColumn::className(),
                     'template' => '{view} {update} {delete}',
                     'urlCreator' => function ($action, UserTest $model, $key, $index, $column) {
-                        return Url::toRoute(['user/' . $action, 'id' => $model->id]);
+                        return Url::toRoute(['user-test/' . $action, 'id' => $model->user_id]);
                     },
                 ]
             ],
