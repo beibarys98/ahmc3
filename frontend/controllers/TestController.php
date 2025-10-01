@@ -136,7 +136,7 @@ class TestController extends Controller
         $writer->save($filePath);
 
         $test = Test::findOne($id);
-        $filename = 'Нәтиже - ' . $test->title_kz . '.xlsx';
+        $filename = 'Тест Нәтижесі - ' . $test->title_kz . '.xlsx';
 
         return Yii::$app->response->sendFile($filePath, $filename);
     }

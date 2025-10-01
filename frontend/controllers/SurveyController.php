@@ -121,7 +121,7 @@ class SurveyController extends Controller
         // Get participants
         $participants = UserTest::find()
             ->andWhere(['test_id' => $id])
-            ->with('user') // preload users
+            ->with('user')
             ->all();
 
         // Get all questions of the test
@@ -133,23 +133,22 @@ class SurveyController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        // Header row (first cell empty, then participant names)
-        $sheet->setCellValue('A1', 'Сұрақ / Қатысушы');
+        // Header row (first cell "Қатысушы", then question labels)
+        $sheet->setCellValue('A1', 'Қатысушы');
         $col = 'B';
-        foreach ($participants as $p) {
-            $sheet->setCellValue($col . '1', $p->user->name);
+        foreach ($questions as $q) {
+            $sheet->setCellValue($col . '1', $q->question ?? ('Q' . $q->id));
             $col++;
         }
 
-        // Fill questions + answers
+        // Fill participants + answers
         $row = 2;
-        foreach ($questions as $q) {
-            // First column = question title
-            $sheet->setCellValue('A' . $row, $q->question ?? ('Q' . $q->id));
+        foreach ($participants as $p) {
+            // First column = participant name
+            $sheet->setCellValue('A' . $row, $p->user->name);
 
             $col = 'B';
-            foreach ($participants as $p) {
-                // Find participant's answer for this question
+            foreach ($questions as $q) {
                 $userSurvey = UserSurvey::find()
                     ->andWhere([
                         'user_id' => $p->user_id,
@@ -160,7 +159,6 @@ class SurveyController extends Controller
                 $answerText = '';
                 if ($userSurvey) {
                     if ($userSurvey->answer_id) {
-                        // load Answer model text
                         $answer = Answer::findOne($userSurvey->answer_id);
                         $answerText = $answer ? $answer->answer : '';
                     } elseif ($userSurvey->answer_text) {
@@ -180,10 +178,9 @@ class SurveyController extends Controller
         $writer = new Xlsx($spreadsheet);
         $writer->save($filePath);
 
-        $filename = 'Жауаптар - ' . $test->title_kz . '.xlsx';
+        $filename = 'Анкета Жауаптары - ' . $test->title_kz . '.xlsx';
         return Yii::$app->response->sendFile($filePath, $filename);
     }
-
 
     public function actionCreate()
     {
