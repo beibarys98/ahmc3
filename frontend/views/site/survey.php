@@ -81,7 +81,6 @@ $this->registerJs("
                 <?php
                 $answers = Answer::find()
                     ->andWhere(['question_id' => $question->id])
-                    ->orderBy('RAND()')
                     ->all();
                 ?>
 
