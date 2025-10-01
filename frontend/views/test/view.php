@@ -170,11 +170,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => ActionColumn::className(),
                     'template' => '{view} {update} {delete}',
                     $urlCreator = function ($action, UserTest $model, $key, $index, $column) {
-                        $userCycle = UserCycle::find()->andWhere(['user_id' => $model->user_id])->one();
-                        if ($userCycle) {
-                            return Url::toRoute(['user-cycle/' . $action, 'id' => $userCycle->id]);
-                        }
-                        return '#'; // или null, или другую ссылку по умолчанию
+                        return Url::toRoute(['user/' . $action, 'id' => $model->user_id]);
                     },
                 ]
             ],
