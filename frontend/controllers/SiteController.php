@@ -378,7 +378,7 @@ class SiteController extends Controller
         $score = 0;
         foreach ($questions as $q) {
             $participantAnswer = UserAnswer::findOne([
-                'user_id' => $participant->id,
+                'user_id' => $participant->user_id,
                 'question_id' => $q->id]);
 
             if ($participantAnswer !== null) {;
