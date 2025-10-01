@@ -142,7 +142,13 @@ class UserCycleController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->user) {
+            $model->user->delete();
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }
