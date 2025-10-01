@@ -8,6 +8,7 @@ use common\models\search\UserSearch;
 use common\models\search\UserTestSearch;
 use common\models\Test;
 use common\models\search\TestSearch;
+use common\models\UserSurvey;
 use common\models\UserTest;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -112,34 +113,77 @@ class SurveyController extends Controller
 
     public function actionResult($id)
     {
-        //save results in xlsx
+        $test = Test::findOne($id);
+        if (!$test) {
+            throw new NotFoundHttpException("Test not found");
+        }
+
+        // Get participants
         $participants = UserTest::find()
             ->andWhere(['test_id' => $id])
-            ->orderBy(['result' => SORT_DESC])
+            ->with('user') // preload users
             ->all();
+
+        // Get all questions of the test
+        $questions = Question::find()
+            ->andWhere(['test_id' => $id])
+            ->orderBy(['id' => SORT_ASC])
+            ->all();
+
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Есімі');
-        $sheet->setCellValue('B1', 'Мекеме');
-        $sheet->setCellValue('C1', 'Нәтиже');
 
+        // Header row (first cell empty, then participant names)
+        $sheet->setCellValue('A1', 'Сұрақ / Қатысушы');
+        $col = 'B';
+        foreach ($participants as $p) {
+            $sheet->setCellValue($col . '1', $p->user->name);
+            $col++;
+        }
+
+        // Fill questions + answers
         $row = 2;
-        foreach ($participants as $participant) {
-            $sheet->setCellValue('A' . $row, $participant->user->name);
-            $sheet->setCellValue('B' . $row, $participant->user->organization);
-            $sheet->setCellValue('C' . $row, $participant->result);
+        foreach ($questions as $q) {
+            // First column = question title
+            $sheet->setCellValue('A' . $row, $q->question ?? ('Q' . $q->id));
+
+            $col = 'B';
+            foreach ($participants as $p) {
+                // Find participant's answer for this question
+                $userSurvey = UserSurvey::find()
+                    ->andWhere([
+                        'user_id' => $p->user_id,
+                        'question_id' => $q->id,
+                    ])
+                    ->one();
+
+                $answerText = '';
+                if ($userSurvey) {
+                    if ($userSurvey->answer_id) {
+                        // load Answer model text
+                        $answer = Answer::findOne($userSurvey->answer_id);
+                        $answerText = $answer ? $answer->answer : '';
+                    } elseif ($userSurvey->answer_text) {
+                        $answerText = $userSurvey->answer_text;
+                    }
+                }
+
+                $sheet->setCellValue($col . $row, $answerText);
+                $col++;
+            }
+
             $row++;
         }
 
-        $filePath = 'uploads/' . time() . '.xlsx'; // Construct the file path
+        // Save and return file
+        $filePath = 'uploads/' . time() . '.xlsx';
         $writer = new Xlsx($spreadsheet);
         $writer->save($filePath);
 
-        $test = Test::findOne($id);
-        $filename = 'Нәтиже - ' . $test->title_kz . '.xlsx';
-
+        $filename = 'Жауаптар - ' . $test->title_kz . '.xlsx';
         return Yii::$app->response->sendFile($filePath, $filename);
     }
+
 
     public function actionCreate()
     {
