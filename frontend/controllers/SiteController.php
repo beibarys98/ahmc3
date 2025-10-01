@@ -11,6 +11,7 @@ use common\models\Test;
 use common\models\User;
 use common\models\UserAnswer;
 use common\models\UserCycle;
+use common\models\UserSurvey;
 use common\models\UserTest;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -24,6 +25,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class SiteController extends Controller
@@ -272,32 +274,70 @@ class SiteController extends Controller
 
     public function actionSubmit()
     {
-        $answerId = Yii::$app->request->get('answer_id');
-        $questionId = Yii::$app->request->get('question_id');
+        $request = Yii::$app->request;
+        $answerId = $request->get('answer_id');
+        $customAnswer = $request->get('custom_answer');
+        $questionId = $request->get('question_id');
         $participantId = Yii::$app->user->id;
-        $participantAnswer = UserAnswer::findOne([
-            'user_id' => $participantId,
-            'question_id' => $questionId,
-        ]);
-        if (!$participantAnswer) {
-            $participantAnswer = new UserAnswer();
-            $participantAnswer->user_id = $participantId;
-            $participantAnswer->question_id = $questionId;
-        }
-        $participantAnswer->answer_id = $answerId;
-        $participantAnswer->save(false);
 
+        $question = Question::findOne($questionId);
+
+        if (!$question) {
+            throw new NotFoundHttpException('Question not found.');
+        }
+
+        // ✅ Check test type
+        if ($question->test->type === 'survey') {
+            // Save in UserSurvey table
+            $participantSurvey = UserSurvey::findOne([
+                'user_id' => $participantId,
+                'question_id' => $questionId,
+            ]);
+
+            if (!$participantSurvey) {
+                $participantSurvey = new UserSurvey();
+                $participantSurvey->user_id = $participantId;
+                $participantSurvey->question_id = $questionId;
+            }
+
+            $participantSurvey->answer_text = $customAnswer ?: null;
+            $participantSurvey->save(false);
+
+        } else {
+            // Save in UserAnswer table
+            $participantAnswer = UserAnswer::findOne([
+                'user_id' => $participantId,
+                'question_id' => $questionId,
+            ]);
+
+            if (!$participantAnswer) {
+                $participantAnswer = new UserAnswer();
+                $participantAnswer->user_id = $participantId;
+                $participantAnswer->question_id = $questionId;
+            }
+
+            $participantAnswer->answer_id = $answerId ?: null;
+            $participantAnswer->answer_text = $customAnswer ?: null;
+            $participantAnswer->save(false);
+        }
+
+        // ✅ Find next question
         $nextQuestion = Question::find()
-            ->andWhere(['test_id' => Question::findOne($questionId)->test_id])
+            ->andWhere(['test_id' => $question->test_id])
             ->andWhere(['>', 'id', $questionId])
             ->orderBy(['id' => SORT_ASC])
             ->one();
+
         if (!$nextQuestion) {
-            $nextQuestion = Question::findOne(['test_id' => Question::findOne($questionId)->test_id]);
+            $nextQuestion = Question::find()
+                ->andWhere(['test_id' => $question->test_id])
+                ->orderBy(['id' => SORT_ASC])
+                ->one();
         }
 
         return $this->redirect(['test', 'id' => $nextQuestion->test_id, 'qid' => $nextQuestion->id]);
     }
+
 
     public function actionEnd($qid)
     {

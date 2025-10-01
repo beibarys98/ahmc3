@@ -105,8 +105,7 @@ $this->registerJs("
                         <?php endforeach; ?>
                     <?php else: ?>
                         <!-- Fallback text field if no predefined answers -->
-                        <textarea name="custom_answer" class="form-control" rows="4"
-                                  placeholder="<?= Yii::t('app', 'Жауабыңызды жазыңыз...') ?>"></textarea>
+                        <textarea name="custom_answer" class="form-control" rows="4" ></textarea>
                     <?php endif; ?>
 
                     <input type="hidden" name="question_id" value="<?= $question->id ?>">
