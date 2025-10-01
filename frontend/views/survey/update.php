@@ -10,7 +10,7 @@ use yii\helpers\Html;
 /** @var common\models\Test $model */
 
 $this->title = 'Өзгерту: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Тесттер', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Анкеталар', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Өзгерту';
 

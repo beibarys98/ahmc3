@@ -14,7 +14,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Test $model */
 
 $this->title = $model->title_kz;
-$this->params['breadcrumbs'][] = ['label' => 'Тесттер', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Анкеталар', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
