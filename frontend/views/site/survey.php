@@ -130,7 +130,9 @@ $this->registerJs("
                         <?php
                         $participantAnswer = UserSurvey::find()
                             ->andWhere(['user_id' => $participant->user_id, 'question_id' => $q->id])->one();
-                        $backgroundColor = $participantAnswer && $participantAnswer->answer_id ? '#157347' : '#BB2D3B';
+                        $backgroundColor = ($participantAnswer && ($participantAnswer->answer_id || $participantAnswer->answer_text))
+                            ? '#157347'   // зелёный, если что-то выбрано или введено
+                            : '#BB2D3B';  // красный, если пусто
                         $borderStyle = ($q->id == $question->id) ? '5px solid #0B5ED7' : 'none'; ?>
 
                         <a href="<?= Url::to(['test', 'id' => $q->test_id, 'qid' => $q->id]) ?>" style="text-decoration: none;">
