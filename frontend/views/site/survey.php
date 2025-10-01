@@ -3,6 +3,7 @@
 use common\models\Answer;
 use common\models\UserAnswer;
 use common\models\Question;
+use common\models\UserSurvey;
 use common\widgets\Alert;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -86,7 +87,7 @@ $this->registerJs("
 
                 <form class="mt-5" id="answerForm" action="<?= Url::to(['submit']) ?>" method="get">
                     <?php
-                    $participantAnswer = UserAnswer::find()
+                    $participantAnswer = UserSurvey::find()
                         ->andWhere(['user_id' => $participant->user_id, 'question_id' => $question->id])
                         ->one();
                     $selectedAnswerId = $participantAnswer ? $participantAnswer->answer_id : null;
