@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
 				'attribute' => 'user_name',
 				'value' => 'user.name',
-				'label' => 'Логин',
+				'label' => 'Аты-жөні',
 			],
 			[
 				'attribute' => 'organization',
