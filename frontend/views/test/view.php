@@ -3,7 +3,6 @@
 use common\models\Answer;
 use common\models\Question;
 use common\models\User;
-use common\models\UserCycle;
 use common\models\UserTest;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -169,8 +168,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => ActionColumn::className(),
                     'template' => '{view} {update} {delete}',
-                    $urlCreator = function ($action, UserTest $model, $key, $index, $column) {
-                        return Url::toRoute(['user/' . $action, 'id' => $model->user_id]);
+                    'urlCreator' => function ($action, UserTest $model, $key, $index, $column) {
+                        return Url::toRoute(['user/' . $action, 'id' => $model->id]);
                     },
                 ]
             ],
