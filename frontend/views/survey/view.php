@@ -27,16 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div>
         <?= Html::a('жаңа',
-            ['test/new', 'id' => $model->id],
+            ['survey/new', 'id' => $model->id],
             ['class' => $model->status == 'new' ? 'btn btn-primary' : 'btn btn-outline-primary']) ?>
         <?= Html::a('дайын',
-            ['test/ready', 'id' => $model->id],
+            ['survey/ready', 'id' => $model->id],
             ['class' => $model->status == 'ready' ? 'btn btn-primary' : 'btn btn-outline-primary']) ?>
         <?= Html::a('жариялау',
-            ['test/publish', 'id' => $model->id],
+            ['survey/publish', 'id' => $model->id],
             ['class' => $model->status == 'public' ? 'btn btn-primary' : 'btn btn-outline-primary']) ?>
         <?= Html::a('аяқтау',
-            ['test/end', 'id' => $model->id],
+            ['survey/end', 'id' => $model->id],
             ['class' => $model->status == 'finished' ? 'btn btn-primary' : 'btn btn-outline-primary']) ?>
     </div>
 
@@ -44,10 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div>
         <?= Html::a('тест',
-            ['test/view', 'id' => $model->id, 'mode' => 'test'],
+            ['survey/view', 'id' => $model->id, 'mode' => 'test'],
             ['class' => $mode == 'test' ? 'btn btn-secondary' : 'btn btn-outline-secondary']) ?>
         <?= Html::a('қатысушылар',
-            ['test/view', 'id' => $model->id, 'mode' => 'participants'],
+            ['survey/view', 'id' => $model->id, 'mode' => 'participants'],
             ['class' => $mode == 'participants' ? 'btn btn-secondary' : 'btn btn-outline-secondary']) ?>
     </div>
 
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div>
         <?= Html::a('нәтиже',
-            ['test/result', 'id' => $model->id],
+            ['survey/result', 'id' => $model->id],
             ['class' => 'btn btn-outline-danger']) ?>
     </div>
 
