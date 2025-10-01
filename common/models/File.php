@@ -78,6 +78,11 @@ class File extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function getFileType()
+    {
+        return $this->hasOne(FileType::class, ['id' => 'file_type_id']);
+    }
+
     /**
      * {@inheritdoc}
      * @return \common\models\query\FileQuery the active query used by this AR class.
