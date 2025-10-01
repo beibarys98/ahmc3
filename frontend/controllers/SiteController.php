@@ -317,7 +317,6 @@ class SiteController extends Controller
             }
 
             $participantAnswer->answer_id = $answerId ?: null;
-            $participantAnswer->answer_text = $customAnswer ?: null;
             $participantAnswer->save(false);
         }
 
