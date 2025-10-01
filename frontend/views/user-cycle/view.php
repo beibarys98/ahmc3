@@ -82,6 +82,14 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
+    <div class="text-end mt-2">
+        <?= Html::a(
+            'Барлығын жүктеп алу',
+            ['user-cycle/download-all', 'user_id' => $model->user_id], // your custom action
+            ['class' => 'btn btn-secondary', 'target' => '_blank']
+        ) ?>
+    </div>
+
 
 
 </div>

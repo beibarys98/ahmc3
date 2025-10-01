@@ -153,6 +153,36 @@ class UserCycleController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDownloadAll($user_id)
+    {
+        // подзапрос: для каждого file_type_id берём максимальный id
+        $subQuery = File::find()
+            ->select(['MAX(id)'])
+            ->andWhere(['user_id' => $user_id])
+            ->groupBy('file_type_id');
+
+        // основной запрос: только последние по типу
+        $files = File::find()
+            ->andWhere(['id' => $subQuery])
+            ->all();
+
+        $zip = new \ZipArchive();
+        $zipFile = Yii::getAlias('@runtime') . "/files_$user_id.zip";
+
+        if ($zip->open($zipFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE)) {
+            foreach ($files as $file) {
+                $path = Yii::getAlias('@webroot/' . $file->path);
+                if (file_exists($path)) {
+                    // в архив добавляем как fileType->file или просто basename
+                    $zip->addFile($path, $file->fileType ? $file->fileType->file : basename($path));
+                }
+            }
+            $zip->close();
+        }
+
+        return Yii::$app->response->sendFile($zipFile);
+    }
+
     /**
      * Finds the UserCycle model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
