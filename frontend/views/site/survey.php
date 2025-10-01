@@ -89,18 +89,25 @@ $this->registerJs("
                     $participantAnswer = UserAnswer::find()
                         ->andWhere(['user_id' => $participant->user_id, 'question_id' => $question->id])
                         ->one();
-                    $selectedAnswerId = $participantAnswer ? $participantAnswer->answer_id : null; ?>
+                    $selectedAnswerId = $participantAnswer ? $participantAnswer->answer_id : null;
+                    ?>
 
-                    <?php foreach ($answers as $a): ?>
-                        <input type="radio" name="answer_id" value="<?= $a->id ?>"
-                               class="form-check-input me-1"
-                            <?= $selectedAnswerId == $a->id ? 'checked' : '' ?>>
-                        <?php if ($a->img_path): ?>
-                            <?= Html::img(Url::to('@web/' . $a->img_path), ['style' => 'max-width: 30%;']) ?><br>
-                        <?php else: ?>
-                            <?= $a->answer; ?><br>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
+                    <?php if (count($answers) > 0): ?>
+                        <?php foreach ($answers as $a): ?>
+                            <input type="radio" name="answer_id" value="<?= $a->id ?>"
+                                   class="form-check-input me-1"
+                                <?= $selectedAnswerId == $a->id ? 'checked' : '' ?>>
+                            <?php if ($a->img_path): ?>
+                                <?= Html::img(Url::to('@web/' . $a->img_path), ['style' => 'max-width: 30%;']) ?><br>
+                            <?php else: ?>
+                                <?= $a->answer; ?><br>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <!-- Fallback text field if no predefined answers -->
+                        <textarea name="custom_answer" class="form-control" rows="4"
+                                  placeholder="<?= Yii::t('app', 'Жауабыңызды жазыңыз...') ?>"></textarea>
+                    <?php endif; ?>
 
                     <input type="hidden" name="question_id" value="<?= $question->id ?>">
 
