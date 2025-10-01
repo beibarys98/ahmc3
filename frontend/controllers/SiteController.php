@@ -359,7 +359,7 @@ class SiteController extends Controller
                 ->count();
             $answeredQuestions = UserAnswer::find()
                 ->joinWith('question')
-                ->andWhere(['user_answer.user_id' => $participant->id])
+                ->andWhere(['user_answer.user_id' => $participant->user_id])
                 ->andWhere(['question.test_id' => $test->id])
                 ->andWhere(['IS NOT', 'user_answer.answer_id', null])
                 ->count();
