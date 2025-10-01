@@ -300,6 +300,7 @@ class SiteController extends Controller
                 $participantSurvey->question_id = $questionId;
             }
 
+            $participantSurvey->answer_id = $answerId ?: null;
             $participantSurvey->answer_text = $customAnswer ?: null;
             $participantSurvey->save(false);
 
