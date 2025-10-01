@@ -391,22 +391,23 @@ class SiteController extends Controller
         $participant->end_time = (new \DateTime())->format('Y-m-d H:i:s');
         $participant->save(false);
 
-        //save results in db
-        $questions = Question::find()->andWhere(['test_id' => $test->id])->all();
-        $score = 0;
-        foreach ($questions as $q) {
-            $participantAnswer = UserAnswer::findOne([
-                'user_id' => $participant->user_id,
-                'question_id' => $q->id]);
+        //save results in db только если это тест
+        if ($test->type === 'test') {
+            $questions = Question::find()->andWhere(['test_id' => $test->id])->all();
+            $score = 0;
+            foreach ($questions as $q) {
+                $participantAnswer = UserAnswer::findOne([
+                    'user_id' => $participant->user_id,
+                    'question_id' => $q->id
+                ]);
 
-            if ($participantAnswer !== null) {;
-                if ($participantAnswer->answer_id == $q->answer) {
+                if ($participantAnswer !== null && $participantAnswer->answer_id == $q->answer) {
                     $score++;
                 }
             }
+            $participant->result = $score;
+            $participant->save(false);
         }
-        $participant->result = $score;
-        $participant->save(false);
 
         $user_cycle = UserCycle::findOne(['user_id' => $participant->user_id]);
 

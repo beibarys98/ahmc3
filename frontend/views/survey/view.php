@@ -162,10 +162,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'start_time',
                 'end_time',
                 [
-                    'attribute' => 'result',
-                    'headerOptions' => ['width' => '5'],
-                ],
-                [
                     'class' => ActionColumn::className(),
                     'template' => '{view} {update} {delete}',
                     'urlCreator' => function ($action, UserTest $model, $key, $index, $column) {
