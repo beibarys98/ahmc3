@@ -71,7 +71,7 @@ class UserTestSearch extends UserTest
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'user_test.id' => $this->id,
             'user_id' => $this->user_id,
             'test_id' => $this->test_id,
             'start_time' => $this->start_time,
