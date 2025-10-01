@@ -173,8 +173,7 @@ class UserCycleController extends Controller
             foreach ($files as $file) {
                 $path = Yii::getAlias('@webroot/' . $file->path);
                 if (file_exists($path)) {
-                    // в архив добавляем как fileType->file или просто basename
-                    $zip->addFile($path, $file->fileType ? $file->fileType->file : basename($path));
+                    $zip->addFile($path, basename($path));
                 }
             }
             $zip->close();
