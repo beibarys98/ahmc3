@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <hr>
 
     <div>
-        <?= Html::a('тест',
+        <?= Html::a('анкета',
             ['survey/view', 'id' => $model->id, 'mode' => 'test'],
             ['class' => $mode == 'test' ? 'btn btn-secondary' : 'btn btn-outline-secondary']) ?>
         <?= Html::a('қатысушылар',
